@@ -1,0 +1,9 @@
+AWS_PROFILE: <name of your AWS IAM role>
+REGION: <AWS region, where to set up the stack; default: eu-west-1>
+USER_NAME: <your twitter profile name (uppercase letters are fine)>
+TWEET_COUNT: <how many tweets to fetch & display>
+BUCKET_NAME: <name of the S3 bucket, where the tweets & the widget's JS file are stored>
+CONSUMER_KEY: <consumer key of your twitter app>
+APPLICATION_SECRET: <application secret of your twitter app>
+ACCESS_TOKEN: <access token of your twitter app>
+ACCESS_TOKEN_SECRET: <access token secret of your twitter app>

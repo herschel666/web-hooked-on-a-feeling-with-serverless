@@ -1,0 +1,30 @@
+
+service: package-release-newsletter
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  profile: ${file(./config.yml):AWS_PROFILE}
+  region: ${file(./config.yml):REGION, 'eu-central-1'}
+  stage: ${opt:stage, 'dev'}
+
+package:
+  include:
+    - handler.js
+  exclude:
+    - ./**
+
+functions:
+  release:
+    handler: handler.release
+    events:
+      - http:
+          path: release
+          method: post
+    environment:
+      WEBHOOK_SECRET: ${file(./config.yml):WEBHOOK_SECRET}
+      MAILCHIMP_API_KEY: ${file(./config.yml):MAILCHIMP_API_KEY}
+      MAILCHIMP_LIST_ID: ${file(./config.yml):MAILCHIMP_LIST_ID}
+      MAILCHIMP_TEMPLATE_ID: ${file(./config.yml):MAILCHIMP_TEMPLATE_ID}
+      MAILCHIMP_FROM_NAME: ${file(./config.yml):MAILCHIMP_FROM_NAME}
+      MAILCHIMP_REPLY_TO: ${file(./config.yml):MAILCHIMP_REPLY_TO}

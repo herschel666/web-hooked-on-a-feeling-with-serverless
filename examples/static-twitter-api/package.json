@@ -1,0 +1,29 @@
+{
+  "name": "static-twitter-api",
+  "version": "0.1.0",
+  "author": "Emanuel Kluge (https://www.emanuel-kluge.de/)",
+  "license": "MIT",
+  "scripts": {
+    "test": "eslint ./{plugin,widget,lambda}",
+    "build": "webpack",
+    "package": "sls package --package .artifact",
+    "upload": "sls deploy --package .artifact",
+    "clean": "rm -rfv ./.artifact ./handler.js",
+    "deploy": "npm run clean && npm run build && npm run package && npm run upload"
+  },
+  "dependencies": {
+    "aws-sdk": "2.204.0",
+    "oauth": "0.9.15"
+  },
+  "devDependencies": {
+    "aphrodite": "^1.2.5",
+    "eslint": "^4.18.2",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "prettier": "^1.11.1",
+    "serverless": "1.26.0",
+    "webpack": "4.0.1",
+    "webpack-cli": "2.0.9"
+  }
+}

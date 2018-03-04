@@ -1,0 +1,8 @@
+lambda
+node_modules
+.eslintrc.yml
+.nvmrc
+.prettierrc
+webpack.config.js
+
+!bot.js

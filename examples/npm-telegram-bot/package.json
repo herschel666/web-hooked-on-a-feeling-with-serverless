@@ -1,0 +1,24 @@
+{
+  "name": "npm-telegram-bot",
+  "version": "0.1.0",
+  "author": "Emanuel Kluge (https://www.emanuel-kluge.de/)",
+  "license": "MIT",
+  "scripts": {
+    "test": "eslint ./lambda",
+    "build": "webpack",
+    "create": "claudia --profile $npm_config_profile create --runtime nodejs8.10 --api-module bot --region $npm_config_region --configure-telegram-bot",
+    "configure": "claudia --profile $npm_config_profile update --runtime nodejs8.10 --configure-telegram-bot",
+    "deploy": "claudia --profile $npm_config_profile update --runtime nodejs8.10"
+  },
+  "devDependencies": {
+    "claudia": "^3.3.1",
+    "claudia-bot-builder": "^3.0.0",
+    "eslint": "^4.18.2",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "prettier": "^1.11.1",
+    "webpack": "^4.1.0",
+    "webpack-cli": "^2.0.10"
+  }
+}

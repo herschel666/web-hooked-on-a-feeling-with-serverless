@@ -1,0 +1,12 @@
+# package directories
+node_modules
+
+# Serverless directories
+.serverless
+.artifact
+
+# Other files
+handler.js
+widget.js
+config.yml
+index.html

@@ -1,3 +1,3 @@
 # (Web)Hooked on a feeling with Serverless
 
-TBD
+Repository holding the slideshow and the examples for my talk for the JSUnconf 2018 in Hamburg.

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>(Web)Hooked on a feeling with Serverless.</title>
+  <link rel="stylesheet" href="main.css">
+  <script src="index.js"></script>
+</head>
+<body>
+  <div class="reveal">
+
+    <div class="slides">
+      <section data-state="cover">
+        <h1>(Web)Hooked on a feeling with Serverless.</h1>
+      </section>
+
+      <section>
+        <h2>Who am I?</h2>
+        <section>
+          <ul>
+            <li class="fragment">Emanuel Kluge</li>
+            <li class="fragment">
+              Frontend developer @ <a href="https://www.jimdo.com/" target="_blank">Jimdo</a>
+            </li>
+            <li class="fragment">
+              <i class="fab fa-github-square fa-sm"></i>
+              <a href="https://github.com/herschel666" target="_blank">Github</a>
+            </li>
+            <li class="fragment">
+              <i class="fab fa-twitter-square fa-sm"></i>
+              <a href="https://twitter.com/herschel_r" target="_blank">twitter</a>
+            </li>
+          </ul>
+        </section>
+      </section>
+
+      <section>
+        <h2>Agenda</h2>
+        <ol>
+          <li class="fragment">Webhooks?</li>
+          <li class="fragment">Serverless??</li>
+          <li class="fragment">Examples</li>
+          <li class="fragment">Recap</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Webhooks</h2>
+        <blockquote cite="http://timothyfitz.com/2009/02/09/what-webhooks-are-and-why-you-should-care/">
+          <p>“Webhooks are user-defined HTTP callbacks.”</p>
+        </blockquote>
+        <small>
+          <a href="http://timothyfitz.com/2009/02/09/what-webhooks-are-and-why-you-should-care/" target="_blank">
+            timothyfitz.com/2009/02/09/what-webhooks-are-and-why-you-should-care/
+          </a>
+        </small>
+      </section>
+
+      <section>
+        <h3>Have been around for like 10 years now, but … who cares?!? 🤷‍♂️</h3>
+        <p class="fragment">
+          I won't pay for a server regularly just to fiddle around with some webhooks now and then.
+        </p>
+      </section>
+
+      <section>
+        <h2>Serverless</h2>
+        <section>
+          <h3>
+            Better known as cloud functions or
+            <abbr title="Function-as-a-service">FaaS</abbr>.
+          </h3>
+        </section>
+        <section>
+          <h3>
+            &hellip; is actually a
+            <a href="https://en.wikipedia.org/wiki/Misnomer" target="_blank">misnomer</a>.
+          </h3>
+          <blockquote class="fragment">
+              A word that suggests an idea that is known to be wrong.
+          </blockquote>
+        </section>
+      </section>
+
+      <section>
+        <img
+          class="img-cloud-fn"
+          src="images/cloud-function.png"
+          alt="Schematic graphic of a cloud function invocation."
+        >
+        <small>
+            (<a href="https://medium.com/@federicopanini/video-content-generated-solution-with-aws-lambda-ccb5d5d4629c" target="_blank">
+              Source: Video content generated solution with AWS Lambda
+            </a>)
+          </small>
+      </section>
+
+      <section>
+        <h3>Advantages</h3>
+        <ul>
+          <li class="fragment">
+            High scalability out of the box
+          </li>
+          <li class="fragment">
+            <abbr title="Denial of Wallet">DoW</abbr>
+            instead of
+            <abbr title="Denial of Service">DoS</abbr>
+          </li>
+          <li class="fragment">
+            Better control over costs
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>
+          Who offers
+          <abbr title="Function-as-a-service">FaaS</abbr>?
+        </h3>
+        <ul>
+          <li class="fragment">AWS</li>
+          <li class="fragment">Google Cloud Platform &amp; Firebase</li>
+          <li class="fragment">Azure</li>
+          <li class="fragment">IBM</li>
+          <li class="fragment">Apache OpenWhisk</li>
+        </ul>
+      </section>
+
+      <section>
+        <h1>&lt;3</h1>
+        <pre class="faas-love">
+&lt;service&gt;.addEventListener(
+  '&lt;webhook&gt;',
+  &lt;lambdaFn&gt;
+);
+        </pre>
+      </section>
+
+      <section>
+        <h2>Benefits</h2>
+        <section>
+          <ul>
+            <li class="fragment">Build &amp; deploy a prototype relatively easy and fast</li>
+            <li class="fragment">Test it with little (financial) effort</li>
+            <li class="fragment">Ditch it or grow within the Cloud Platform Ecosystem</li>
+          </ul>
+        </section>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+      </section>
+
+      <section>
+        <section>
+          <h2>Static Twitter API</h2>
+        </section>
+
+        <section>
+          <p>What bothered me &hellip;</p>
+        </section>
+
+        <section>
+          <p>Either use the official Twitter Widget and load a lot of crap.</p>
+        </section>
+
+        <section>
+          <p>Or maintain a service that proxies the Twitter API.</p>
+        </section>
+
+        <section>
+          <p>Serverless + IFTTT to the rescue!!1</p>
+        </section>
+
+        <section>
+          <p>Btw: since the THAT in IFTTT can be a webhook, literally everything on this planet can trigger your cloud function! 🌍</p>
+          <img src="images/mind-blown.gif" alt="Mind blown!" class="fragment">
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h2>So what do we need?</h2>
+        </section>
+
+        <section>
+          <p>A twitter app to get access to the API &hellip;</p>
+          <img src="images/twitter-app-wizard.png" alt="Screenshot of the twitter app wizard.">
+        </section>
+
+        <section>
+          <p>A cloud function &hellip;</p>
+        </section>
+
+        <section>
+          <p>
+            We'll use the
+            <a href="https://serverless.com/" target="_blank">serverless framework</a>
+            here &hellip;
+          </p>
+          <img src="images/twitter-yaml-lambda.svg" alt="Definition of a Lambda function in serverless.yml">
+        </section>
+
+        <section>
+          <p>A S3 bucket &hellip;</p>
+          <img src="images/twitter-yaml-s3-bucket.svg" alt="Definition of a Lambda function in serverless.yml">
+        </section>
+
+        <section>
+          <p>Allow the function to write a file into the bucket &hellip;</p>
+          <img src="images/twitter-yaml-iam-role.svg" alt="Definition of an IAM role in serverless.yml">
+        </section>
+
+        <section>
+          <p>Allow the world to read the tweets &hellip;</p>
+          <img src="images/twitter-yaml-bucket-policy.svg" alt="Definition of a bucket policy in serverless.yml">
+        </section>
+
+        <section>
+          <p>Set up the cloud function &hellip;</p>
+          <img src="images/twitter-js-lambda-fn.svg" alt="Definition of the basic Lambda code">
+        </section>
+
+        <section>
+          <p>Set up an applet on IFTTT &hellip;</p>
+          <img src="images/ifttt.png" alt="Screenshot of IFTT">
+        </section>
+
+        <section>
+          <p>Eventually the tweets arrive &hellip;</p>
+          <img src="images/twitter-json-tweets.svg" alt="Example JSON file containing tweets.">
+        </section>
+
+        <section>
+          <p>Which we can use for a static twitter widget &hellip;</p>
+        </section>
+
+        <section>
+          <div id="static-twitter-widget" class="twttr-widget"></div>
+        </section>
+      </section>
+
+      <section>
+        <h2>NPM Telegram Bot</h2>
+      </section>
+
+      <section>
+        <p>
+          For this example I use
+          <a href="https://www.npmjs.com/package/claudia" target="_blank" rel="noreferrer noopener">ClaudiaJS</a>,
+          because it makes things easy.
+        </p>
+      </section>
+
+      <section>
+        <p>
+          Also it brings the
+          <a href="https://www.npmjs.com/package/claudia-bot-builder" target="_blank" rel="noreferrer noopener">BotBuilder</a>,
+          which makes things even easier!
+        </p>
+      </section>
+
+      <section>
+        <section>
+          <h2>So what do we need?</h2>
+        </section>
+
+        <section>
+          <p>A new Telegram bot. So let's go to the Botfather &hellip;</p>
+          <img src="images/botfather.png" alt="Screenshot of Telegram chat with the Botfather" class="fragment">
+        </section>
+
+        <section>
+          <p>A cloud function &hellip;</p>
+          <img src="images/bot-js-lambda-fn.svg" alt="Definition of a Lambda function for the Telegram bot">
+        </section>
+
+        <section>
+          <p>That's it! The ClaudiaJS-CLI takes care of the rest. 😲</p>
+          <p class="fragment">&hellip; don't forget to pass it the bot's secret key though!!</p>
+        </section>
+
+        <section>
+          <p>Demo time!</p>
+        </section>
+      </section>
+
+      <section>
+        <h2>Github Release Newsletter</h2>
+      </section>
+
+      <section>
+        <p>Imagine sending a newsletter containing the changelog on every release.</p>
+      </section>
+
+      <section>
+        <p>The only thing you have to do &hellip;</p>
+        <p class="fragment">
+          <strong>Releasing!</strong>
+        </p>
+        <p class="fragment">
+          <small>Obviously semantic-release writes the changelog for you. 😏</small>
+        </p>
+      </section>
+
+      <section>
+        <section>
+          <h2>So what do we need?</h2>
+        </section>
+
+        <section>
+          <img src="images/mailchimp.png" alt="Screenshot of mobile Mailchimp website">
+        </section>
+
+        <section>
+          <ol>
+            <li>Create a list for the subscribers &hellip;</li>
+            <li class="fragment">Create a template for the newsletter.</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>Set up the cloud function</h2>
+        </section>
+
+        <section>
+          <p>
+            We'll use the
+            <a href="https://serverless.com/" target="_blank">serverless framework</a>
+            here again &hellip;
+          </p>
+          <img src="images/grn-yaml-lambda.svg" alt="Definition of a Lambda function in serverless.yml">
+        </section>
+
+        <section>
+          <p>Gathering data from the request payload &hellip;</p>
+          <img src="images/grn-js-lmbda-1.svg" alt="Definition of a Lambda function in serverless.yml">
+        </section>
+
+        <section>
+          <p>Fetching more data, setting up the newsletter &amp; sending it into the world.</p>
+          <img src="images/grn-js-lmbda-2.svg" alt="Definition of a Lambda function in serverless.yml">
+        </section>
+
+        <section>
+          <p>After deploying the function we can set up GitHub &hellip;</p>
+          <img src="images/grn-github-settings.png" alt="Screenshot of the webhook settings on Github" class="fragment">
+        </section>
+
+        <section>
+          <p>That's it. Demo time!</p>
+        </section>
+      </section>
+
+      <section>
+        <h2>Recap</h2>
+      </section>
+
+      <section>
+        <p>Webhooks are cool.</p>
+        <p class="fragment">Cloud functions are also cool.</p>
+        <p class="fragment">Combine both for a lot of profit &amp; win.</p>
+      </section>
+
+      <section>
+        <h2>Thanks! 😃</h2>
+      </section>
+
+    </div>
+  </div>
+</body>
+</html>

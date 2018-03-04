@@ -1,0 +1,8 @@
+AWS_PROFILE: <name of your AWS IAM role>
+REGION: <AWS region, where to set up the stack; default: eu-central-1>
+WEBHOOK_SECRET: <secret of your webhook>
+MAILCHIMP_API_KEY: <your Mailchimp API key>
+MAILCHIMP_LIST_ID: <unique ID of the Mailchimp recipient list>
+MAILCHIMP_TEMPLATE_ID: <unique ID of the Mailchimp template>
+MAILCHIMP_FROM_NAME: <name of the person/organisation that sends the newsletter>
+MAILCHIMP_REPLY_TO: <email address the recipients can reply to>

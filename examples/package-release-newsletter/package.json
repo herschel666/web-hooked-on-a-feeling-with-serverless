@@ -1,0 +1,28 @@
+{
+  "name": "package-release-newsletter",
+  "version": "0.1.0",
+  "description": "Send a newsletter to all subscribers with the complete changelog when a new version is released.",
+  "main": "lambda/index.js",
+  "scripts": {
+    "test": "eslint ./lambda",
+    "build": "webpack",
+    "package": "sls package --package .artifact",
+    "upload": "sls deploy --package .artifact",
+    "clean": "rm -rfv ./.artifact ./handler.js",
+    "deploy": "npm run clean && npm run build && npm run package && npm run upload"
+  },
+  "author": "Emanuel Kluge (https://www.emanuel-kluge.de/)",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.18.2",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "mailchimp-api-v3": "^1.8.0",
+    "prettier": "^1.11.1",
+    "serverless": "^1.26.1",
+    "showdown": "^1.8.6",
+    "webpack": "^4.1.0",
+    "webpack-cli": "^2.0.10"
+  }
+}

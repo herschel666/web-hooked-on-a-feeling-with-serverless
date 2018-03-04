@@ -1,0 +1,112 @@
+
+service: twitter-widget
+
+
+custom:
+  bucketName: ${file(./config.yml):BUCKET_NAME}
+  region: ${file(./config.yml):REGION, 'eu-central-1'}
+
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
+  profile: ${file(./config.yml):AWS_PROFILE}
+  region: ${self:custom.region}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "s3:PutObject"
+      Resource:
+        - "arn:aws:s3:::${self:custom.bucketName}/tweets.json"
+
+
+package:
+  exclude:
+    - ./**
+  include:
+    - ./handler.js
+
+
+functions:
+  build:
+    handler: handler.build
+    events:
+      - http:
+          path: build
+          method: post
+    environment:
+      BUCKET_NAME: ${self:custom.bucketName}
+      USER_NAME: ${file(./config.yml):USER_NAME}
+      TWEET_COUNT: ${file(./config.yml):TWEET_COUNT}
+      CONSUMER_KEY: ${file(./config.yml):CONSUMER_KEY}
+      APPLICATION_SECRET: ${file(./config.yml):APPLICATION_SECRET}
+      ACCESS_TOKEN: ${file(./config.yml):ACCESS_TOKEN}
+      ACCESS_TOKEN_SECRET: ${file(./config.yml):ACCESS_TOKEN_SECRET}
+
+
+resources:
+  Resources:
+    TweetsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucketName}
+        AccessControl: PublicReadWrite
+        CorsConfiguration:
+          CorsRules:
+          - AllowedHeaders: ['*']
+            AllowedMethods: [GET]
+            AllowedOrigins: ['*']
+            ExposedHeaders: [Date]
+            Id: myCORSRuleId
+            MaxAge: "3600"
+    BucketReadPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: ${self:custom.bucketName}
+        PolicyDocument:
+          Statement:
+            -
+              Action:
+                - "s3:GetObject"
+              Effect: Allow
+              Resource:
+                - "arn:aws:s3:::${self:custom.bucketName}/tweets.json"
+              Principal: "*"
+    TweetsCDN:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          Origins:
+            - DomainName: ${self:custom.bucketName}.s3.${self:custom.region}.amazonaws.com
+              Id: myS3Origin
+              CustomOriginConfig:
+                HTTPPort: 80
+                HTTPSPort: 443
+                OriginProtocolPolicy: https-only
+          Enabled: 'true'
+          Comment: Serving tweets
+          DefaultCacheBehavior:
+            AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+            Compress: 'true'
+            TargetOriginId: myS3Origin
+            ForwardedValues:
+              QueryString: 'false'
+              Cookies:
+                Forward: none
+              Headers:
+                - Origin
+            ViewerProtocolPolicy: redirect-to-https
+          HttpVersion: http2
+          IPV6Enabled: 'true'
+          PriceClass: PriceClass_100
+          ViewerCertificate:
+            CloudFrontDefaultCertificate: 'true'
+
+  Outputs:
+    TweetsCDNOutput:
+      Value:
+        'Fn::GetAtt': [ TweetsCDN, DomainName ]
