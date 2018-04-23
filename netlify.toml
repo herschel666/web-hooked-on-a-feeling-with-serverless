@@ -1,0 +1,4 @@
+[build]
+  base    = "slideshow"
+  publish = "slideshow/dist"
+  command = "yarn build"
